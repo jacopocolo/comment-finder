@@ -29,3 +29,16 @@ javascript: (function() {
         comDet();
     })()
 })()
+
+
+var css = document.getElementsByTagName('link');
+for (x=0;x<css.length;x++) {
+  if (css[x].href.includes(".css") && !css[x].href.includes("min.css"))
+  console.log(css[x].href)
+}
+
+var js = document.getElementsByTagName('script');
+for (x=0;x<js.length;x++) {
+  if (js[x].src.includes(".js") && !js[x].src.includes("min.js"))
+  console.log(js[x].src)
+}
