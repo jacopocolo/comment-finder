@@ -37,8 +37,24 @@ for (x=0;x<css.length;x++) {
   console.log(css[x].href)
 }
 
+function loadXMLDoc(theURL)
+{
+    if (window.XMLHttpRequest)
+    {// code for IE7+, Firefox, Chrome, Opera, Safari, SeaMonkey
+        xmlhttp=new XMLHttpRequest();
+    }
+    xmlhttp.onreadystatechange=function()
+    {
+        if (xmlhttp.readyState==4 && xmlhttp.status==200)
+        {
+            alert(xmlhttp.responseText);
+        }
+    }
+    xmlhttp.open("GET", theURL, false);
+    xmlhttp.send();
+}
 var js = document.getElementsByTagName('script');
 for (x=0;x<js.length;x++) {
   if (js[x].src.includes(".js") && !js[x].src.includes("min.js"))
-  console.log(js[x].src)
+  console.log(httpGet(js[x].src))
 }
