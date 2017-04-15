@@ -5,23 +5,19 @@
                 "js/detect.js"
             ],
 			"matches": [
-                "http://*",
-                "https://*"
+                "<all_urls>"
             ]
         }
     ],
 	"description": "Detect comments in the page source code",
 	"icons": {
-		"128": "img/icon_128.png",
-		"48": "img/icon_48.png",
-		"16": "img/icon_16.png"
+		"128": "img/icon_128.png"
 	},
 	"manifest_version": 2,
 	"name": "Comment detector",
 	"permissions": [
-        "storage",
-        "http://*",
-        "https://*"
+				"http://*/*",
+	 			"https://*/*"
     ],
 	"short_name": "Comment detector",
 	"version": "0.0.1",

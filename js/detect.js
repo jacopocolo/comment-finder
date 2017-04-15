@@ -1,3 +1,10 @@
+//TODO:
+//Match inline HTML, JS, CSS comments
+//Match external CSS comments
+//Match external JS comments
+//Display found comments in icon
+//Create a popup that shows the comments
+
 // javascript: (function() {
 //     (function() {
 //         function loadCSS(filename) {
@@ -31,30 +38,48 @@
 // })()
 
 
-var css = document.getElementsByTagName('link');
-for (x=0;x<css.length;x++) {
-  if (css[x].href.includes(".css") && !css[x].href.includes("min.css"))
-  console.log(css[0].href)
-}
+
 
 function loadXMLDoc(theURL)
 {
     if (window.XMLHttpRequest)
-    {// code for IE7+, Firefox, Chrome, Opera, Safari, SeaMonkey
+    {
         xmlhttp=new XMLHttpRequest();
     }
     xmlhttp.onreadystatechange=function()
     {
         if (xmlhttp.readyState==4 && xmlhttp.status==200)
         {
-            alert(xmlhttp.responseText);
+            console.log(xmlhttp.responseText);
         }
     }
-    xmlhttp.open("GET", theURL, false);
+    xmlhttp.open("GET", theURL, true);
     xmlhttp.send();
 }
+
 var js = document.getElementsByTagName('script');
 for (x=0;x<js.length;x++) {
-  if (js[x].src.includes(".js") && !js[x].src.includes("min.js"))
-  console.log(loadXMLDoc(js[0].src))
+  if (js[x].src.includes(".js") &&
+      js[x].src.includes(window.location.hostname) &&
+      !js[x].src.includes("min.js") &&
+      !js[x].src.includes("google")
+    ) {
+      console.log("✅ "+js[x].src);
+      //loadXMLDoc(js[x].src);
+    } else {
+      console.log("js filtered: "+js[x].src)
+    }
+}
+
+var css = document.getElementsByTagName('link');
+for (x=0;x<css.length;x++) {
+  if (css[x].rel == "stylesheet"
+      && css[x].href.includes(".css")
+      && !css[x].href.includes("min.css")
+    ) {
+      console.log("✅ "+css[x].href);
+      //loadXMLDoc(css[x].href);
+    } else {
+      console.log("css filtered:"+css[x].href)
+    }
 }
