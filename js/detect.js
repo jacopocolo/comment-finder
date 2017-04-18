@@ -1,9 +1,8 @@
 //TODO:
-//Match inline HTML, JS, CSS comments
-//Match external CSS comments
-//Match external JS comments
 //Display found comments in icon http://stackoverflow.com/questions/5759130/google-chrome-extension-numbers-on-the-icon
+//Count all found comments
 //Create a popup that shows the comments
+//
 
 var totalComments = 0;
 
@@ -131,5 +130,5 @@ var parseJs = function(string, source) {
 }
 
 findHtml();
-// findCss();
-// findJs();
+findCss();
+findJs();
