@@ -18,6 +18,10 @@ function loadXMLDoc(myurl, type) {
 
     xmlhttp.onreadystatechange = function () {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+          //cases for parsers callback
+          if (type == "html") {
+            parseHtml(xmlhttp.responseText, myurl);
+          }
           if (type == "css") {
             parseCss(xmlhttp.responseText, myurl);
           }
@@ -26,43 +30,45 @@ function loadXMLDoc(myurl, type) {
           }
         }
     }
-
     xmlhttp.open("GET", myurl, true);
     xmlhttp.send();
     return xmlhttp.onreadystatechange();
 }
 
-//HTML Comments
 var findHtml = function() {
-    var html = document.getElementsByTagName('html')[0].innerHTML;
-    var matchHtml = html.match(/<!--[\s\S]*?-->/g);
-    if (matchHtml === null) {
-        console.log('No HTML comments');
-    } else {
-        for (x=0;x<matchHtml.length;x++) {
-            console.log(matchHtml[x])
-        }
-        totalComments+=x;
-    }
-    var matchCss = html.match(/\/\*[^*]*\*+([^/*][^*]*\*+)*\//);
-    if (matchCss === null) {
-        console.log('No CSS comments in HTML');
-    } else {
-        for (x=0;x<matchCss.length;x++) {
-            console.log(matchCss[x])
-        }
-        totalComments+=x;
-    }
-    var matchJs = html.match(/\/\*[\s\S]*?\*\/|([^\\:]|^)\/\/.*$/gm);
-    if (matchJs === null) {
-        console.log('No js comments in HTML');
-    } else {
-        for (x=0;x<matchJs.length;x++) {
-            console.log(matchJs[x])
-        }
-        totalComments+=x;
-    }
-};
+    loadXMLDoc(window.location.href, "html");
+}
+
+var parseHtml = function(string, source) {
+  console.log("✅ " + source);
+  var matchHtml = string.match(/<!--[\s\S]*?-->/g);
+      if (matchHtml === null) {
+          console.log('No HTML comments');
+      } else {
+          for (x=0;x<matchHtml.length;x++) {
+              console.log(matchHtml[x])
+          }
+          totalComments+=x;
+      }
+      var matchCss = string.match(/\/\*[^*]*\*+([^/*][^*]*\*+)*\//);
+      if (matchCss === null) {
+          console.log('No CSS comments in HTML');
+      } else {
+          for (x=0;x<matchCss.length;x++) {
+              console.log(matchCss[x])
+          }
+          totalComments+=x;
+      }
+      var matchJs = string.match(/\/\*[\s\S]*?\*\/|([^\\:]|^)\/\/.*$/gm);
+      if (matchJs === null) {
+          console.log('No js comments in HTML');
+      } else {
+          for (x=0;x<matchJs.length;x++) {
+              console.log(matchJs[x])
+          }
+          totalComments+=x;
+      }
+}
 
 //CSS Comments
 var findCss = function() {
@@ -125,5 +131,5 @@ var parseJs = function(string, source) {
 }
 
 findHtml();
-findCss();
-findJs();
+// findCss();
+// findJs();
