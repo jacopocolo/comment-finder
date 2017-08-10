@@ -8,7 +8,16 @@ chrome.runtime.sendMessage({method:"getComments"},function(response){
   for (x = 0; x < response.length; x++) {
     console.log(response);
     if (response[x].url == currentTab) {
-      $('#comments').text(response[x].html[0]);
+      $("#nocomments").hide();
+      for (h=0;h<response[x].html.length;h++){
+      $('#html').text(response[x].html[h]);
+      }
+      for (c=0;c<response[x].css.length;c++){
+      $('#css').text(response[x].css[c]);
+      }
+      for (j=0;j<response[x].js.length;j++){
+      $('#js').text(response[x].js[j]);
+      }
     }
   };
 });
