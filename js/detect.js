@@ -1,9 +1,9 @@
 //TODO:
 //Create a popup that shows the comments
-//Run the script every time a tab is switched: https://stackoverflow.com/questions/23417839/chrome-extension-get-url-of-newly-selected-tab
 
 var totalComments = 0;
 var comments = {
+  url:window.location.href,
   html:[],
   css:[],
   js:[]
@@ -46,44 +46,36 @@ var findHtml = function() {
 }
 
 var parseHtml = function(string, source) {
-    console.log("✅ " + source);
-    //insertComment("✅ " + source);
+    //console.log("✅ " + source);
     var matchHtml = string.match(/<!--[\s\S]*?-->/g);
     if (matchHtml === null) {
-        console.log('No HTML comments');
-        //insertComment('No HTML comments');
+        //console.log('No HTML comments');
     } else {
         for (x = 0; x < matchHtml.length; x++) {
             comments.html.push(matchHtml[x]);
-            //console.log(matchHtml[x])
-            //insertComment(matchHtml[x])
         }
         totalComments += x;
     }
     var matchCss = string.match(/\/\*[^*]*\*+([^/*][^*]*\*+)*\//);
     if (matchCss === null) {
-        console.log('No CSS comments in HTML');
-        //insertComment('No CSS comments in HTML')
+        //console.log('No CSS comments in HTML');
     } else {
         for (x = 0; x < matchCss.length; x++) {
             comments.html.push(matchCss[x]);
-            //insertComment(matchCss[x])
         }
         totalComments += x;
     }
     var matchJs = string.match(/\/\*[\s\S]*?\*\/|([^\\:]|^)\/\/.*$/gm);
     if (matchJs === null) {
-        console.log('No js comments in HTML');
-        //insertComment('No js comments in HTML')
+        //console.log('No js comments in HTML');
     } else {
         for (x = 0; x < matchJs.length; x++) {
             comments.html.push(matchJs[x]);
-            //insertComment(matchJs[x]);
         }
         totalComments += x;
     }
     //last function to be called, the one that updates the badge
-    console.log(comments);
+    //console.log(comments);
     chrome.runtime.sendMessage(comments);
 }
 
@@ -98,26 +90,22 @@ var findCss = function() {
         ) {
             loadXMLDoc(css[x].href, "css");
         } else {
-            console.log("css filtered: " + css[x].href)
-            //insertComment("css filtered: " + css[x].href)
+            //console.log("css filtered: " + css[x].href)
         }
     }
 }
 
 var parseCss = function(string, source) {
-    console.log("✅ " + source);
+    //console.log("✅ " + source);
     cssMatch = string.match(/(\/\*([\s\S]*?)\*\/)|(\/\/(.*)$)/gm);
     if (cssMatch === null) {
-        console.log('No CSS comments');
-        //insertComment('No CSS comments')
+        //console.log('No CSS comments');
     } else {
         for (x = 0; x < cssMatch.length; x++) {
             comments.css.push(cssMatch[x]);
-            //insertComment(cssMatch[x]);
         }
         totalComments += x;
-        console.log(totalComments);
-        //insertComment(totalComments);
+        //console.log(totalComments);
     }
 }
 
@@ -132,33 +120,30 @@ var findJs = function() {
         ) {
             loadXMLDoc(js[x].src, "js");
         } else {
-            console.log("js filtered: " + js[x].src)
-            //insertComment("js filtered: " + js[x].src);
+            //console.log("js filtered: " + js[x].src)
         }
     }
 }
 
 var parseJs = function(string, source) {
-    console.log("✅ " + source);
-    //insertComment("✅ " + source);
+    //console.log("✅ " + source);
     jsMatch = string.match(/\/\*[\s\S]*?\*\/|([^\\:]|^)\/\/.*$/gm);
     if (jsMatch === null) {
         console.log('No JS comments');
-        //insertComment("No JS comments")
     } else {
         for (x = 0; x < jsMatch.length; x++) {
             comments.js.push(jsMatch[x]);
-            //insertComment(jsMatch[x]);
         }
         totalComments += x;
-        //insertComment(totalComments);
     }
 }
 
 chrome.runtime.onMessage.addListener(
-    function(request) {
-      console.log(request);
-      }
+    function(request, sender, sendResponse) {
+      findCss();
+      findJs();
+      findHtml();
+    }
 );
 
 findCss();
