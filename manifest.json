@@ -3,7 +3,8 @@
 		{
 			"js": [
 								"js/popup.js",
-								"js/detect.js"
+								"js/detect.js",
+								"js/libs/jquery-2.0.3.min.js"
             ],
 			"matches": [
                 "<all_urls>"

@@ -14,10 +14,10 @@ function resetBadge() {
 }
 
 chrome.runtime.onMessage.addListener(
-  function(request) {
-    var totalComments = request.html.length + request.css.length + request.js.length;
+  function(msg, sender, sendResponse) {
+    if (msg.html) {
+    var totalComments = msg.html.length + msg.css.length + msg.js.length;
     if (totalComments > 0) {
-      console.log(request)
       chrome.browserAction.setBadgeBackgroundColor({
         color: [255, 0, 0, 255]
       });
@@ -25,11 +25,15 @@ chrome.runtime.onMessage.addListener(
         text: totalComments.toString()
       });
       //push the whole objest to the array
-      carrots.push(request);
+      carrots.push(msg);
       //populate the popup usng the last element added in the array
       updatePopup(carrots.length-1);
     } else {
       resetBadge();
+    }
+  }
+    if(msg.method == "getComments") {
+            sendResponse(carrots);
     }
   });
 
@@ -38,7 +42,6 @@ chrome.tabs.onActivated.addListener(function(info) {
   var tab = chrome.tabs.get(info.tabId, function(tab) {
     for (x = 0; x < carrots.length; x++) {
       if (carrots[x].url == tab.url) {
-        updatePopup(x);
         var totalComments = carrots[x].html.length + carrots[x].css.length + carrots[x].js.length;
         chrome.browserAction.setBadgeBackgroundColor({
           color: [255, 0, 0, 255]
