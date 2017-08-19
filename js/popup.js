@@ -32,10 +32,9 @@ $('#render').click(function(e){
     onrendered: function(canvas) {
       document.body.appendChild(canvas);
       console.log(canvas.toDataURL())
-    }/*,
-    width: 500,
+    },
     height: 500,
-    background: '#efe'*/
+    background: '#efe'
   });
   });
 
