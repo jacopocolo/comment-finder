@@ -4,7 +4,8 @@
 			"js": [
 								"js/popup.js",
 								"js/detect.js",
-								"js/libs/jquery-2.0.3.min.js"
+								"js/libs/jquery-2.0.3.min.js",
+								"js/libs/html2canvas.js"
             ],
 			"matches": [
                 "<all_urls>"

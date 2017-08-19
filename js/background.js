@@ -1,4 +1,6 @@
-//TODO: talk to popup.js: https://stackoverflow.com/questions/15967023/passing-var-from-background-js-to-popup-js
+//TODO:
+//- maintain only current tabs in array
+//- flush older versions of the same tab
 
 //why carrots? ¯\_(ツ)_/¯
 var carrots = [];

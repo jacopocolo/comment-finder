@@ -1,0 +1,36 @@
+pre {
+  white-space: pre-wrap;
+  font-size: small;
+}
+
+.comments {
+  width: 75%;
+  height: 100%;
+  display: inline;
+  float: left;
+  background-color: grey;
+}
+
+.comment {
+  padding: 5px;
+  border: 1px solid grey;
+  margin-top: 5px;
+}
+
+.anchors {
+  width: 25%;
+  height: 100%;
+  display: inline;
+  float: right;
+  background-color: black;
+  color: white;
+}
+
+#spinner {
+  font-family: monospace;
+  font-size: 1.5em;
+  font-weight: bold;
+  border: 1px solid #eee;
+  display: inline-block;
+  margin: .25em;
+}
