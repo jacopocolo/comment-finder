@@ -1,7 +1,32 @@
+html body {
+  font-family: "Fira Mono", monospace;
+  padding: 5px;
+  margin: 0px;
+  margin-top: 30px;
+  width: 650px;
+}
+
 pre {
+  font-family: "Fira Mono", monospace;
   white-space: pre-wrap;
-  font-size: small;
+  font-size: 0.8em;
   background-color: white;
+}
+
+.nav {
+  height: 30px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: grey;
+  width: 100%;
+}
+
+.anchorlink {
+  display: inline-block;
+  width: 33%;
+  text-align: center;
+  color: black;
 }
 
 .comments {

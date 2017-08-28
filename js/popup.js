@@ -2,32 +2,40 @@
 //- add loading animation or state
 //- remove the no comment state
 
-var currentTab;
-
-chrome.tabs.query({active : true, currentWindow: true}, function (tabs) {
-    currentTab = tabs[0].url;
-});
-
-chrome.runtime.sendMessage({method:"getComments"},function(response){
-  for (x = 0; x < response.length; x++) {
-    console.log(response);
-    if (response[x].url == currentTab) {
-      $("#nocomments").hide();
-      for (h=0;h<response[x].html.length;h++){
-      $('<div class="comment"><div/>').text(response[x].html[h]).appendTo("#html");
-      }
-      for (c=0;c<response[x].css.length;c++){
-      $('<div class="comment"><div/>').text(response[x].css[c]).appendTo("#css");
-      }
-      for (j=0;j<response[x].js.length;j++){
-      $('<div class="comment"><div/>').text(response[x].js[j]).appendTo('#js');
-      }
-      return
+chrome.runtime.sendMessage({
+  method: "getComments"
+}, function(response) {
+  $("#nocomments").hide();
+  $("#htmllink").text("HTML(" + response.html.length + ")");
+  $("#csslink").text("CSS(" + response.css.length + ")");
+  $("#jslink").text("JS(" + response.js.length + ")");
+  $("#url").append(response.url);
+  //populates the sections with content from array or prints no comments if there's no content
+  if (response.html.length > 0) {
+    for (h = 0; h < response.html.length; h++) {
+      $('<div class="comment"><div/>').text(response.html[h]).appendTo("#html");
     }
+  } else {
+    $('<div><div/>').text("No comments").appendTo("#html")
+  }
+  if (response.css.length > 0) {
+    for (c = 0; c < response.css.length; c++) {
+      $('<div class="comment"><div/>').text(response.css[c]).appendTo("#css");
+    }
+  } else {
+    $('<div><div/>').text("No comments").appendTo("#css")
   };
+  if (response.js.length > 0) {
+    for (j = 0; j < response.js.length; j++) {
+      $('<div class="comment"><div/>').text(response.js[j]).appendTo('#js');
+    }
+  } else {
+    $('<div><div/>').text("No comments").appendTo("#js")
+  }
+  return
 });
 
-$('#render').click(function(e){
+/*$('#render').click(function(e) {
   html2canvas($(".comment"), {
     onrendered: function(canvas) {
       document.body.appendChild(canvas);
@@ -36,7 +44,7 @@ $('#render').click(function(e){
     height: 500,
     background: '#efe'
   });
-  });
+});*/
 
 /*var spinners = [
   "▁▃▄▅▆▇█▇▆▅▄▃",

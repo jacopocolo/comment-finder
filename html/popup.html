@@ -4,16 +4,18 @@
         <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
         <script src="../js/libs/jquery-2.0.3.min.js"></script>
         <script src="../js/libs/html2canvas.js"></script>
+        <link rel="stylesheet" href="https://code.cdn.mozilla.net/fonts/fira.css">
         <link rel="stylesheet" type="text/css" href="../css/style.css"/>
     </head>
     <body>
-        <button id="render">Render</button>
-        <pre><h1>HTML</h1></pre>
-        <pre id="html">No comments</pre>
-        <pre><h1>CSS</h1></pre>
-        <pre id="css">No comments</pre>
-        <pre><h1>JAVASCRIPT</h1></pre>
-        <pre id="js">No comments</pre>
+        <div class="nav"><a class="anchorlink" id="htmllink" href="#htmlheader">HTML</a><a class="anchorlink" id="csslink" href="#cssheader">CSS</a><a class="anchorlink" id="jslink" href="#jsheader">JS</a></div>
+        <pre id="url"></pre>
+        <pre><h1 id="htmlheader">HTML</h1></pre>
+        <pre id="html"></pre>
+        <pre><h1 id="cssheader">CSS</h1></pre>
+        <pre id="css"></pre>
+        <pre><h1 id="jsheader">JAVASCRIPT</h1></pre>
+        <pre id="js"></pre>
     </body>
     <script src="../js/popup.js"></script>
 </html>
