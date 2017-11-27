@@ -116,6 +116,7 @@ var findJs = function() {
         if (js[x].src.includes(".js") &&
             js[x].src.includes(window.location.hostname) &&
             !js[x].src.includes("min.js") &&
+            !js[x].src.includes("cdn") &&
             !js[x].src.includes("google")
         ) {
             loadXMLDoc(js[x].src, "js");
