@@ -15,12 +15,26 @@ function resetBadge() {
 }
 
 var currentTab;
+
 //When a page has completed
 chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
+  //We check if the load is completed
   if (changeInfo.status == 'complete') {
-    if (currentTab == tab.url) {
+  tabJustCompleted = tab.url;
+    chrome.tabs.query({
+        active: true,
+        lastFocusedWindow: true
+    }, function(tabs) {
+        /*console.log("tab just finished loading: "+tab.url)
+        console.log("current active tab: "+tabs[0].url)*/
+        currentTab = tabs[0].url;
+    });
+    //We check if the currentTab matches the url of the tab that just reported
+    //the complete status. If it does, it means that we are on the right tab.
+    //If it doesn't, it means that the tab has finished loading in the background
+    if (tabJustCompleted == currentTab) {
       for (x = 0; x < carrots.length; x++) {
-        if (carrots[x].url == tab.url) {
+        if (carrots[x].url == currentTab) {
           var totalComments = carrots[x].html.length + carrots[x].css.length + carrots[x].js.length;
           chrome.browserAction.setBadgeBackgroundColor({
             color: [255, 0, 0, 255]
@@ -88,7 +102,6 @@ chrome.runtime.onMessage.addListener(
     if(msg.method == "getComments") {
             for (x=0; x<carrots.length; x++) {
                 if (carrots[x].url == currentTab) {
-                  //console.log(carrots[x]);
                   sendResponse(carrots[x]);
                 }
             }

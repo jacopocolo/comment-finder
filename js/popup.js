@@ -5,11 +5,13 @@
 chrome.runtime.sendMessage({
   method: "getComments"
 }, function(response) {
+  console.log(response)
   $("#nocomments").hide();
   $("#htmllink").text("HTML(" + response.html.length + ")");
   $("#csslink").text("CSS(" + response.css.length + ")");
   $("#jslink").text("JS(" + response.js.length + ")");
   $("#url").append(response.url);
+
   //populates the sections with content from array or prints no comments if there's no content
   if (response.html.length > 0) {
     for (h = 0; h < response.html.length; h++) {
