@@ -52,7 +52,7 @@ var parseHtml = function(string, source) {
         //console.log('No HTML comments');
     } else {
         for (x = 0; x < matchHtml.length; x++) {
-            comments.html.push(matchHtml[x]);        }
+            comments.html.push([matchHtml[x],source]);        }
         totalComments += x;
     }
     var matchCss = string.match(/\/\*[^*]*\*+([^/*][^*]*\*+)*\//);
@@ -60,7 +60,7 @@ var parseHtml = function(string, source) {
         //console.log('No CSS comments in HTML');
     } else {
         for (x = 0; x < matchCss.length; x++) {
-            comments.html.push(matchCss[x]);
+            comments.html.push([matchCss[x],source]);
         }
         totalComments += x;
     }
@@ -69,7 +69,7 @@ var parseHtml = function(string, source) {
         //console.log('No js comments in HTML');
     } else {
         for (x = 0; x < matchJs.length; x++) {
-            comments.html.push(matchJs[x]);
+            comments.html.push([matchJs[x],source]);
         }
         totalComments += x;
     }
@@ -102,7 +102,7 @@ var parseCss = function(string, source) {
     } else {
         for (x = 0; x < cssMatch.length; x++) {
             //source is the source file here
-            comments.css.push(cssMatch[x]);
+            comments.css.push([cssMatch[x],source]);
         }
         totalComments += x;
         //console.log(totalComments);
@@ -133,7 +133,7 @@ var parseJs = function(string, source) {
         console.log('No JS comments');
     } else {
         for (x = 0; x < jsMatch.length; x++) {
-            comments.js.push(jsMatch[x]);
+            comments.js.push([jsMatch[x],source]);
         }
         totalComments += x;
     }

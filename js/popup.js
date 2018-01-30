@@ -15,21 +15,21 @@ chrome.runtime.sendMessage({
   //populates the sections with content from array or prints no comments if there's no content
   if (response.html.length > 0) {
     for (h = 0; h < response.html.length; h++) {
-      $('<div class="comment"><div/>').text(response.html[h]).appendTo("#html");
+      $('<div class="comment"><div/>').text(response.html[h][0]).appendTo("#html");
     }
   } else {
     $('<div><div/>').text("No comments").appendTo("#html")
   }
   if (response.css.length > 0) {
     for (c = 0; c < response.css.length; c++) {
-      $('<div class="comment"><div/>').text(response.css[c]).appendTo("#css");
+      $('<div class="comment"><div/>').text(response.css[c][0]).appendTo("#css");
     }
   } else {
     $('<div><div/>').text("No comments").appendTo("#css")
   };
   if (response.js.length > 0) {
     for (j = 0; j < response.js.length; j++) {
-      $('<div class="comment"><div/>').text(response.js[j]).appendTo('#js');
+      $('<div class="comment"><div/>').text(response.js[j][0]).appendTo('#js');
     }
   } else {
     $('<div><div/>').text("No comments").appendTo("#js")
