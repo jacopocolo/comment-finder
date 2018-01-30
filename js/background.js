@@ -118,3 +118,9 @@ chrome.runtime.onMessage.addListener(
       }
     }
   });
+
+//What object should I send?
+//I need:
+//Url OK
+//Comments OK
+//Comments source: ???

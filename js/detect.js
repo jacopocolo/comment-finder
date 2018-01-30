@@ -52,8 +52,7 @@ var parseHtml = function(string, source) {
         //console.log('No HTML comments');
     } else {
         for (x = 0; x < matchHtml.length; x++) {
-            comments.html.push(matchHtml[x]);
-        }
+            comments.html.push(matchHtml[x]);        }
         totalComments += x;
     }
     var matchCss = string.match(/\/\*[^*]*\*+([^/*][^*]*\*+)*\//);
@@ -102,6 +101,7 @@ var parseCss = function(string, source) {
         //console.log('No CSS comments');
     } else {
         for (x = 0; x < cssMatch.length; x++) {
+            //source is the source file here
             comments.css.push(cssMatch[x]);
         }
         totalComments += x;
