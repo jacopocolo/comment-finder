@@ -37,21 +37,6 @@ chrome.runtime.sendMessage({
   return
 });
 
-/* $('#test').click(function(){
-  $.ajax({
-    type:"POST",
-    crossDomain: true,
-    url:"http://jacopocolo.com/cd/save.php",
-    data:{
-      data: img
-    },
-    success: function(data) {
-      console.log(data); // apple
-    }
-  });
-}) */
-
-
 $('body').on('click', 'div.comment', function() {
   console.log($(this).text())
   html2canvas($(this), {
