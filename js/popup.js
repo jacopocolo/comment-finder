@@ -41,6 +41,7 @@ chrome.runtime.sendMessage({
 $('body').on('click', 'div.comment', function() {
   var comment = $(this).text();
   var source = $(this).data().source;
+  var selectedElement = $(this)
   html2canvas($(this), {
     onrendered: function(canvas) {
       $.ajax({
@@ -54,7 +55,7 @@ $('body').on('click', 'div.comment', function() {
                 "timestamp": Date.now()
               },
         success: function(response) {
-          console.log(response);
+          selectedElement.after("<a href='"+response+"' target='_blank'>"+response+"</a>");
         }
       });
     },
