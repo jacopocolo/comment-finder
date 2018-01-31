@@ -1,11 +1,12 @@
 //TODO:
 //- add loading animation or state
 //- remove the no comment state
-
+var carrot;
 chrome.runtime.sendMessage({
   method: "getComments"
 }, function(response) {
-  console.log(response)
+  console.log(response);
+  carrot = response;
   $("#nocomments").hide();
   $("#htmllink").text("HTML(" + response.html.length + ")");
   $("#csslink").text("CSS(" + response.css.length + ")");
@@ -45,7 +46,17 @@ $('body').on('click', 'div.comment', function() {
         type:"POST",
         crossDomain: true,
         url:"https://www.jacopocolo.com/cd/save.php",
-        data: "data="+canvas.toDataURL(),
+        data: { "img": canvas.toDataURL(),
+                "comment": carrot.html[1][0],
+                "url": carrot.url,
+                "file": carrot.html[1][1],
+                "timestamp": Date.now()
+              },
+        /* data: "img="+canvas.toDataURL()+
+              "comment="+carrot.html[0][0]+
+              "url="+carrot.url+
+              "source="+carrot.html[0][1]+
+              "timestamp="+Date.now(), */
         success: function(response) {
           console.log(response);
         }
