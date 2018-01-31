@@ -16,21 +16,21 @@ chrome.runtime.sendMessage({
   //populates the sections with content from array or prints no comments if there's no content
   if (response.html.length > 0) {
     for (h = 0; h < response.html.length; h++) {
-      $('<div class="comment"><div/>').text(response.html[h][0]).appendTo("#html");
+      $('<div class="comment" data-source="'+response.html[h][1]+'"><div/>').text(response.html[h][0]).appendTo("#html");
     }
   } else {
     $('<div><div/>').text("No comments").appendTo("#html")
   }
   if (response.css.length > 0) {
     for (c = 0; c < response.css.length; c++) {
-      $('<div class="comment"><div/>').text(response.css[c][0]).appendTo("#css");
+      $('<div class="comment" data-source="'+response.css[c][1]+'"><div/>').text(response.css[c][0]).appendTo("#css");
     }
   } else {
     $('<div><div/>').text("No comments").appendTo("#css")
   };
   if (response.js.length > 0) {
     for (j = 0; j < response.js.length; j++) {
-      $('<div class="comment"><div/>').text(response.js[j][0]).appendTo('#js');
+      $('<div class="comment" data-source="'+response.js[j][1]+'"><div/>').text(response.js[j][0]).appendTo('#js');
     }
   } else {
     $('<div><div/>').text("No comments").appendTo("#js")
@@ -39,7 +39,8 @@ chrome.runtime.sendMessage({
 });
 
 $('body').on('click', 'div.comment', function() {
-  console.log($(this).text())
+  var comment = $(this).text();
+  var source = $(this).data().source;
   html2canvas($(this), {
     onrendered: function(canvas) {
       $.ajax({
@@ -47,16 +48,11 @@ $('body').on('click', 'div.comment', function() {
         crossDomain: true,
         url:"https://www.jacopocolo.com/cd/save.php",
         data: { "img": canvas.toDataURL(),
-                "comment": carrot.html[1][0],
+                "comment": comment.toString(),
                 "url": carrot.url,
-                "file": carrot.html[1][1],
+                "source": source.toString(),
                 "timestamp": Date.now()
               },
-        /* data: "img="+canvas.toDataURL()+
-              "comment="+carrot.html[0][0]+
-              "url="+carrot.url+
-              "source="+carrot.html[0][1]+
-              "timestamp="+Date.now(), */
         success: function(response) {
           console.log(response);
         }
