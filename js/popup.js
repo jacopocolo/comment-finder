@@ -42,6 +42,7 @@ $('body').on('click', 'div.comment', function() {
   var comment = $(this).text();
   var source = $(this).data().source;
   var selectedElement = $(this)
+  var date = Date.now();
   html2canvas($(this), {
     onrendered: function(canvas) {
       $.ajax({
@@ -52,7 +53,7 @@ $('body').on('click', 'div.comment', function() {
                 "comment": comment.toString(),
                 "url": carrot.url,
                 "source": source.toString(),
-                "timestamp": Date.now()
+                "timestamp": date
               },
         success: function(response) {
           selectedElement.after("<a href='"+response+"' target='_blank'>"+response+"</a>");
