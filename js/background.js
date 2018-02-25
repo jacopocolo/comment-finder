@@ -3,6 +3,7 @@
 
 //why carrots? ¯\_(ツ)_/¯
 var carrots = [];
+var currentTab;
 var popups = chrome.extension.getViews({
   type: "popup"
 });
@@ -16,11 +17,39 @@ function resetBadge() {
   });
 }
 
-//Used by the activated, the load-complete reports and send message functions
-var currentTab;
+function updateBadge() {
+  resetBadge();
+  chrome.tabs.query({}, function(tabs) {
+    for (var i = 0; i < tabs.length; i++) {
+      if (tabs[i].active == true) {
+        for (x = 0; x < carrots.length; x++) {
+          if (carrots[x].url == tabs[i].url) {
+            currentTab = tabs[i].url;
+            var totalComments = carrots[x].html.length + carrots[x].css.length + carrots[x].js.length;
+            chrome.browserAction.setBadgeBackgroundColor({
+              color: [255, 0, 0, 255]
+            });
+            chrome.browserAction.setBadgeText({
+              text: totalComments.toString()
+            });
+          }
+        };
+      }
+    }
+  });
+}
 
+chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab){
+  updateBadge()
+});
 
-//SET THE BADGE PROPERLY FUNCTIONS
+chrome.tabs.onActivated.addListener(function(evt){
+  chrome.tabs.get(evt.tabId, function(tab){
+    updateBadge()
+  });
+});
+
+/* //SET THE BADGE PROPERLY FUNCTIONS
 
 //If the page is activated
 //On newtabs, this triggers chrome://newtab/ and NOT the url you are entering
@@ -71,10 +100,9 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
       }
     });
   }
-});
+}); */
 
 //SEND THE COMMENTS TO POPUP
-
 chrome.runtime.onMessage.addListener(
   function(msg, sender, sendResponse) {
     if (msg.html) {
@@ -109,7 +137,6 @@ chrome.runtime.onMessage.addListener(
         resetBadge();
       }
     }
-
     if (msg.method == "getComments") {
       for (x = 0; x < carrots.length; x++) {
         if (carrots[x].url == currentTab) {
@@ -118,9 +145,3 @@ chrome.runtime.onMessage.addListener(
       }
     }
   });
-
-//What object should I send?
-//I need:
-//Url OK
-//Comments OK
-//Comments source: ???
