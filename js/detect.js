@@ -96,7 +96,7 @@ var findCss = function() {
 
 var parseCss = function(string, source) {
     //console.log("✅ " + source);
-    cssMatch = string.match(/(\/\*([\s\S]*?)\*\/)|(\/\/(.*)$)/gm);
+    cssMatch = string.match(/(\/\*([\s\S]*?)\*\/)|(^\/\/(.*)$)/gm);
     if (cssMatch === null) {
         //console.log('No CSS comments');
     } else {
