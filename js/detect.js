@@ -64,7 +64,7 @@ var parseHtml = function(string, source) {
         }
         totalComments += x;
     }
-    var matchJs = string.match(/\/\*[\s\S]*?\*\/|([^\\:'"]|^)\/\/.*$/gm);
+    var matchJs = string.match(/\/\*[\s\S]*?\*\/|(^)\/\/.*$/gm);
     if (matchJs === null) {
         //console.log('No js comments in HTML');
     } else {
@@ -128,7 +128,7 @@ var findJs = function() {
 
 var parseJs = function(string, source) {
     //console.log("✅ " + source);
-    jsMatch = string.match(/\/\*[\s\S]*?\*\/|([^\\:]|^)\/\/.*$/gm);
+    jsMatch = string.match(/\/\*[\s\S]*?\*\/|(^)\/\/.*$/gm);
     if (jsMatch === null) {
         console.log('No JS comments');
     } else {
