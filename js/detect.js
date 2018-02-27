@@ -64,7 +64,7 @@ var parseHtml = function(string, source) {
         }
         totalComments += x;
     }
-    var matchJs = string.match(/\/\*[\s\S]*?\*\/|([^\\:]|^)\/\/.*$/gm);
+    var matchJs = string.match(/\/\*[\s\S]*?\*\/|([^\\:']|^)\/\/.*$/gm);
     if (matchJs === null) {
         //console.log('No js comments in HTML');
     } else {
